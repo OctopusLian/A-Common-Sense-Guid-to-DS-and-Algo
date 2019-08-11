@@ -1,39 +1,24 @@
-#---
-# Excerpted from "A Common-Sense Guide to Data Structures and Algorithms",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit http://www.pragmaticprogrammer.com/titles/jwdsal for more book information.
-#---
 def binary_search(array, value)
 
-  # First, we establish the lower and upper bounds of where the value
-  # we're searching for can be. To start, the lower bound is the first
-  # value in the array, while the upper bound is the last value:
-
+  # 首先，设定下界和上界，以限定所查的值可能出现的范围
+  # 在开始时，以数组的第一个元素为下界，以最后一个元素为上界
   lower_bound = 0
   upper_bound = array.length - 1
 
-  # We begin a loop in which we keep inspecting the middlemost value
-  # between the upper and lower bounds:
+  # 循环检查上界和下界之间的最中间的元素
 
   while lower_bound <= upper_bound do
 
-    # We find the midpoint between the upper and lower bounds:
-    # (We don't have to worry about the result being a non-integer
-    # since in Ruby, the result of division of integers will always 
-    # be rounded down to the nearest integer.)
+    # 找出中间的索引
 
     midpoint = (upper_bound + lower_bound) / 2
 
-    # We inspect the value at the midpoint:
+    # 获取该索引的值
 
     value_at_midpoint = array[midpoint]
 
-    # If the value at the midpoint is the one we're looking for, we're done.
-    # If not, we change the lower or upper bound based on whether we need
-    # to guess higher or lower:
+    # 如果该值是我们想要的，返回即可
+    # 否则，调整上界或下界
 
     if value < value_at_midpoint
       upper_bound = midpoint - 1
@@ -44,9 +29,7 @@ def binary_search(array, value)
     end
   end
 
-  # If we've narrowed the bounds until they've reached each other, that
-  # means that the value we're searching for is not contained within
-  # this array:
+  # 当下界超越上界，得知数组里没有我们想要的值，返回nil
 
   return nil
 end

@@ -1,11 +1,3 @@
-#---
-# Excerpted from "A Common-Sense Guide to Data Structures and Algorithms",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit http://www.pragmaticprogrammer.com/titles/jwdsal for more book information.
-#---
 class Node
 
   attr_accessor :data, :next_node
@@ -25,18 +17,16 @@ class LinkedList
   end
 
   def read(index)
-    # We begin at the first node of the list:
+    # 从第一个结点开始
     current_node = first_node
     current_index = 0
 
     while current_index < index do
-      # We keep following the links of each node until we get to the
-      # index we're looking for: 
+      # 顺着链往下找，直到我们要找的那个索引值
       current_node = current_node.next_node
       current_index += 1
 
-      # If we're past the end of the list, that means the
-      # value cannot be found in the list, so return nil:
+      # 如果读到最后一个结点之后，就说明所找的索引不在链表中，因此返回nil
       return nil unless current_node
     end
 
@@ -44,23 +34,22 @@ class LinkedList
   end
 
   def index_of(value)
-    # We begin at the first node of the list:
+    # 从第一个结点开始
     current_node = first_node
     current_index = 0
 
     begin
-      # If we find the data we're looking for, we return it:
+      # 如果找到，就返回
       if current_node.data == value
         return current_index
       end
 
-      # Otherwise, we move on the next node:
+      # 否则，看下一个结点
       current_node = current_node.next_node
       current_index += 1
     end while current_node
 
-    # If we get through the entire list, without finding the
-    # data, we return nil:
+    # 如果遍历整个链表都没有找到，就返回nil
     return nil
   end
 
@@ -68,40 +57,44 @@ class LinkedList
     current_node = first_node
     current_index = 0
 
-    # First, we find the index immediately before where the
-    # new node will go:
+    # 首先，找出新结点插入位置前的那一结点
     while current_index < index do
       current_node = current_node.next_node
       current_index += 1
     end
 
-    # We create the new node:
+    # 创建新结点
     new_node = Node.new(value)
     new_node.next_node = current_node.next_node
     
-    # We modify the link of the previous node to point to
-    # our new node:
+    # 使前一结点的链指向新结点
     current_node.next_node = new_node
   end
 
   def delete_at_index(index)
+    # 如果删除的是第一个节点，则将first_node重置为第二个节点，并返回原来第一个节点
+    if index == 0
+      deleted_node = first_node
+      @first_node = first_node.next_node
+      return deleted_node
+    end
+
     current_node = first_node
     current_index = 0
 
-    # First, we find the node immediately before the one we
-    # want to delete and call it current_node:
+    # 先找出被删结点前的那一结点，并将其命名为current_node
     while current_index < index - 1 do
       current_node = current_node.next_node
       current_index += 1
     end
 
-    # We find the node that comes after the one we're deleting: 
+    # 再找出被删节点后的那一节点
+    deleted_node = current_node.next_node
     node_after_deleted_node = current_node.next_node.next_node
 
-    # We change the link of the current_node to point to the
-    # node_after_deleted_node, leaving the node we want
-    # to delete out of the list:
+    # 将current_node的链指向node_after_deleted_node，这样被删节点就被排除在链表之外了
     current_node.next_node = node_after_deleted_node
+    deleted_node
   end
 
 end

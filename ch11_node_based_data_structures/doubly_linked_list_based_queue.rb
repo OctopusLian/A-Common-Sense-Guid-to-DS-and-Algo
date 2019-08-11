@@ -1,11 +1,3 @@
-#---
-# Excerpted from "A Common-Sense Guide to Data Structures and Algorithms",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit http://www.pragmaticprogrammer.com/titles/jwdsal for more book information.
-#---
 class Node
 
   attr_accessor :data, :next_node, :previous_node
@@ -28,7 +20,7 @@ class DoublyLinkedList
   def insert_at_end(value)
     new_node = Node.new(value)
 
-    # If there are no elements yet in the linked list:
+    # 如果链表还没有任何节点
     if !first_node
       @first_node = new_node
       @last_node = new_node

@@ -1,11 +1,3 @@
-#---
-# Excerpted from "A Common-Sense Guide to Data Structures and Algorithms",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit http://www.pragmaticprogrammer.com/titles/jwdsal for more book information.
-#---
 class PrintManager
 
   def initialize
@@ -18,8 +10,7 @@ class PrintManager
 
   def run
     while @queue.any?
-      # the Ruby shift method removes and returns the
-      # first element of an array:
+      # shift方法：可以移出并返回数组的第一个元素
       print(@queue.shift)
     end
   end
@@ -27,8 +18,7 @@ class PrintManager
   private 
 
   def print(document)
-    # Code to run the actual printer goes here. 
-    # For demo purposes, we'll print to the terminal:
+    # 打印文档
     puts document
   end
 

@@ -1,37 +1,28 @@
-#---
-# Excerpted from "A Common-Sense Guide to Data Structures and Algorithms",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit http://www.pragmaticprogrammer.com/titles/jwdsal for more book information.
-#---
 class Linter
 
   attr_reader :error
 
   def initialize
-    # We use a simple array to serve as our stack:
+    # 用一个普通的数组当栈
     @stack = []
   end
 
   def lint(text)
-    # We start a loop which reads each character in our text:
+    # 循环读取文件的每个字符
     text.each_char.with_index do |char, index|
 
       if opening_brace?(char)
 
-        # If the character is an opening brace, we push it onto the stack:
+        # 如果读到左括号，则将其压入栈中
         @stack.push(char)
       elsif closing_brace?(char)
 
         if closes_most_recent_opening_brace?(char)
 
-          # If the character closes the most recent opening brace,
-          # we pop the opening brace from our stack:
+          # 如果读到右括号，并且它与栈顶的左括号匹配，则将栈顶弹出
           @stack.pop
 
-        else # if the character does NOT close the most recent opening brace
+        else # 如果读到右括号，但它与栈顶的左括号不匹配
  
           @error = "Incorrect closing brace: #{char} at index #{index}"
           return
@@ -41,10 +32,7 @@ class Linter
     end
 
     if @stack.any?
-
-      # If we get to the end of line, and the stack isn't empty,
-      # that means we have an opening brace without a corresponding
-      # closing brace:
+      # 如果读完所有字符后栈不为空，就表示文中存在着没有响应右括号的左括号
       @error = "#{@stack.last} does not have a closing brace"
     end
   end

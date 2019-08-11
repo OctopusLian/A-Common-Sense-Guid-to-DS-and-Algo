@@ -5,26 +5,22 @@ class TreeNode:
         self.rightChild = right
 
 def search(value, node):
-    # Base case: If the node is nonexistent 
-    # or we've found the value we're looking for:
+    # Base case: 如果node不存在，或者node的值符合
     if node is None or node.value == value:
         return node
 
-    # If the value is less than the current node, perform
-    # search on the left child:
+    # 如果value小于当前节点，那就从左子节点处查找
     elif value < node.value:
         return search(value, node.leftChild)
 
-    # If the value is less than the current node, perform
-    # search on the right child:
+    # 如果value大于当前节点，那就从右子节点处查找
     else:  # value > node.value
         return search(value, node.rightChild)
 
 def insert(value, node):
     if value < node.value:
 
-        # If the left child does not exist, we want to insert
-        # the value as the left child:
+        # 如果左子节点不存在，则将新值作为左子节点
         if node.leftChild is None:
             node.leftChild = TreeNode(value)
         else:
@@ -32,8 +28,7 @@ def insert(value, node):
 
     elif value > node.value:
 
-        # If the right child does not exist, we want to insert
-        # the value as the right child:
+        # 如果右子节点不存在，则将新值作为右子节点
         if node.rightChild is None:
             node.rightChild = TreeNode(value)
         else:
@@ -49,43 +44,34 @@ def traverse_and_print(node):
 
 def delete(valueToDelete, node):
 
-    # The base case is when we've hit the bottom of the tree,
-    # and the parent node has no children:
+    # 当前位置的上一层无子节点，已到达树的底层
     if node is None:
         return None
 
-    # If the value we're deleting is less or greater than the current node,
-    # we set the left or right child respectively to be 
-    # the return value of a recursive call of this very method on the current 
-    # node's left or right subtree.
+    # 如果要删除的值小于（或大于）当前节点
+    # 则以左子树（或右子树）为参数，递归调用本方法，然后将当前节点的左链（或右链）指向返回的节点
     elif valueToDelete < node.value:
         node.leftChild = delete(valueToDelete, node.leftChild)
-        # We return the current node (and its subtree if existent) to 
-        # be used as the new value of its parent's left or right child:
+        # 将当前节点（及其子树，如果存在的话），返回作为其父节点的新左子节点（或新右子节点）
         return node
     elif valueToDelete > node.value:
         node.rightChild = delete(valueToDelete, node.rightChild)
         return node
 
-    # If the current node is the one we want to delete:
+    # 如果要删除的正是当前节点
     elif valueToDelete == node.value:
 
-        # If the current node has no left child, we delete it by 
-        # returning its right child (and its subtree if existent) 
-        # to be its parent's new subtree:
+        # 如果当前节点没有左子节点
+        # 则以右子节点，（及其子树，如果存在的话）替换当前节点成为当前节点之父节点的新子节点
         if node.leftChild is None:
             return node.rightChild
 
-            # (If the current node has no left OR right child, this
-            # ends up being None as per the first line of code in this
-            # function.)
+            # 如果当前节点没有左子节点，也没有右子节点，那这里就是返回None
 
         elif node.rightChild is None:
             return node.leftChild
     
-        # If the current node has two children, we delete the current node
-        # by calling the lift function (below), which changes the current node's
-        # value to the value of its successor node:
+        # 如果当前节点有两个子节点，则用lift函数来做删除，它会使当前节点的值变成其后继节点的值
         else:
             node.rightChild = lift(node.rightChild, node)
             return node
@@ -93,19 +79,14 @@ def delete(valueToDelete, node):
     
 def lift(node, nodeToDelete):
 
-    # If the current node of this function has a left child, 
-    # we recursively call this function to continue down 
-    # the left subtree to find the successor node. 
+    # 如果此函数的当前节点有左子节点，则递归调用本函数，从左子树找出后继节点
     if node.leftChild:
         node.leftChild = lift(node.leftChild, nodeToDelete)
         return node
-    # If the current node has no left child, that means the current node
-    # of this function is the successor node, and we take its value
-    # and make it the new value of the node that we're deleting:
+    # 如果此函数的当前节点无左子节点，则代表当前节点是后继节点，于是将其值设置为被删除节点的新值
     else:
         nodeToDelete.value = node.value
-        # We return the successor node's right child to be now used
-        # as its parent's left child:
+        # 用后继节点的右子节点替代后继节点的父节点的左子节点
         return node.rightChild
 
         

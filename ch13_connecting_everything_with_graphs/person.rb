@@ -1,11 +1,3 @@
-#---
-# Excerpted from "A Common-Sense Guide to Data Structures and Algorithms",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit http://www.pragmaticprogrammer.com/titles/jwdsal for more book information.
-#---
 class Person
   
   attr_accessor :name, :friends, :visited
@@ -20,21 +12,19 @@ class Person
   end
 
   def display_network
-    # We keep track of every node we ever visit, so we can reset
-    # their 'visited' attribute back to false after our algorithm
-    # is complete:
+    # 记下每个访问过的人，以便算法完结后能重置他们的visited的属性为false
     to_reset = [self]
 
-    # Create the queue. It starts out containing the root vertex:
+    # 创建一个开始就含有根节点的队列
     queue = [self]
     self.visited = true
 
     while queue.any?
-      # The current vertex is whatever is removed from the queue
+      # 设置出队的顶点为当前顶点
       current_vertex = queue.shift
       puts current_vertex.name
 
-      # We add all adjacent vertices of the current vertex to the queue:
+      # 将当前顶点的所有未访问的邻接点加入队列
       current_vertex.friends.each do |friend|
         if !friend.visited
           to_reset << friend
@@ -44,8 +34,7 @@ class Person
       end
     end
 
-    # After the algorithm, is complete, we reset each node's 'visited'
-    # attribute to false:
+    # 算法完结时，将访问过的节点的visited属性重置为false
     to_reset.each do |node|
       node.visited = false
     end

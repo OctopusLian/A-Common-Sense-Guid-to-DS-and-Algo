@@ -1,11 +1,3 @@
-#---
-# Excerpted from "A Common-Sense Guide to Data Structures and Algorithms",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit http://www.pragmaticprogrammer.com/titles/jwdsal for more book information.
-#---
 class SortableArray
 
   attr_reader :array
@@ -16,11 +8,11 @@ class SortableArray
 
   def partition!(left_pointer, right_pointer)
     
-    # We always choose the rightmost element as the pivot
+    # 总是取最右的值作为轴
     pivot_position = right_pointer 
     pivot = @array[pivot_position]
 
-    # We start the right pointer immediately to the left of the pivot
+    # 将右指针指向轴左边的一格
     right_pointer -= 1 
 
     while true do
@@ -41,11 +33,10 @@ class SortableArray
 
     end
 
-    # As a final step, we swap the left pointer with the pivot itself
+    # 最后将左指针的值与轴交换
     swap(left_pointer, pivot_position)
 
-    # We return the left_pointer for the sake of the quicksort method
-    # which will appear later in this chapter
+    # 根据快速排序的需要，返回左指针
     return left_pointer
   end
 
@@ -56,40 +47,35 @@ class SortableArray
   end
 
   def quicksort!(left_index, right_index)
-    #base case: the subarray has 0 or 1 elements
+    #base case: 分出的子数组长度为0或1
     if right_index - left_index <= 0
       return
     end
     
-    # Partition the array and grab the position of the pivot
+    # 将数组分成两部分，并返回分隔所用的轴的索引
     pivot_position = partition!(left_index, right_index)
 
-    # Recursively call this quicksort method on whatever is to the left 
-    # of the pivot:
+    # 对轴左侧的部分递归调用quicksort
     quicksort!(left_index, pivot_position - 1)
 
-    # Recursively call this quicksort method on whatever is to the right 
-    # of the pivot:
+    # 对轴右侧的部分递归调用quicksort
     quicksort!(pivot_position + 1, right_index)
   end
 
   def quickselect!(kth_lowest_value, left_index, right_index)
-    # If we reach a base case - that is, that the subarray has one cell,
-    # we know we've found the value we're looking for
+
     if right_index - left_index <= 0
       return @array[left_index]
     end
     
-    # Partition the array and grab the position of the pivot
+    # 将数组分成两部分，并返回分隔所用的轴的索引
     pivot_position = partition!(left_index, right_index)
 
     if kth_lowest_value < pivot_position
       quickselect!(kth_lowest_value, left_index, pivot_position - 1)
     elsif kth_lowest_value > pivot_position
       quickselect!(kth_lowest_value, pivot_position + 1, right_index)
-    else # kth_lowest_value == pivot_position
-      # if after the partition, the pivot position is in the same spot
-      # as the kth lowest value, we've found the value we're looking for
+    else
       return @array[pivot_position]
     end
   end

@@ -1,17 +1,9 @@
-/***
- * Excerpted from "A Common-Sense Guide to Data Structures and Algorithms",
- * published by The Pragmatic Bookshelf.
- * Copyrights apply to this code. It may not be used to create training material,
- * courses, books, articles, and the like. Contact us if you are in doubt.
- * We make no guarantees that this code is fit for any purpose.
- * Visit http://www.pragmaticprogrammer.com/titles/jwdsal for more book information.
-***/
 function selectionSort(array) {
-  for(var i = 0; i < array.length; i++) {
-    var smallestNumberIndex = i;
-    for(var j = i + 1; j < array.length; j++) {
-      if(array[j] < array[smallestNumberIndex]) {
-        smallestNumberIndex = j;
+  for(var i = 0; i < array.length; i++) {  //外层，每一轮的检查
+    var smallestNumberIndex = i;  //先记住目前的最小值的索引
+    for(var j = i + 1; j < array.length; j++) {  //内层，逐个检查数组未排序的格子
+      if(array[j] < array[smallestNumberIndex]) {  
+        smallestNumberIndex = j;  //若遇到比之前记录的本轮最小值还小的格子值，更新smallestNumberIndex
       }
     }
  
